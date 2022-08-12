@@ -5,5 +5,46 @@
 </ion-header>
 
 <ion-content>
-
+  <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+    <ion-item>
+      <ion-label position="floating"> E-mail </ion-label>
+      <ion-input type="text" formControlName="email" name="email" id="email">
+      </ion-input>
+      <div
+        class="erroValidacao"
+        *ngIf="loginForm.get('email').dirty || loginForm.get('email').touched"
+      >
+        <small *ngIf="loginForm.get('email').errors?.email">
+          E-mail inválido
+        </small>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating"> Senha </ion-label>
+      <ion-input
+        type="password"
+        formControlName="senha"
+        name="senha"
+        id="senha"
+      >
+      </ion-input>
+    </ion-item>
+    <div class="erroValidacao" [hidden]="!fail">
+      <p>E-mail ou senha incorreto(s)</p>
+    </div>
+    <ion-button
+      type="submit"
+      color="primary"
+      [disabled]="!loginForm.valid"
+      style="width: 100%"
+      >Entrar</ion-button
+    >
+    <ion-button
+      type="button"
+      [routerLink]="['/cadastro']"
+      color="primary"
+      style="width: 100%"
+      >Cadastrar</ion-button
+    >
+  </form>
 </ion-content>

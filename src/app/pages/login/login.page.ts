@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -6,10 +9,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.email, Validators.required]),
+    senha: new FormControl('', Validators.required),
+  });
 
-  constructor() { }
+  fail = false;
+
+  constructor(private usuarioService: UsuarioService, private router: Router) {}
 
   ngOnInit() {
+    console.log(this.loginForm);
   }
 
+  submitForm() {
+    if (this.loginForm.valid) {
+      this.fail = false;
+      this.usuarioService
+        .login(
+          this.loginForm.get('email').value,
+          this.loginForm.get('senha').value
+        )
+        .then((user) => {
+          if (user.id) {
+            localStorage.setItem('userId', user.id.toString());
+            this.router.navigate(['/menu']);
+          } else {
+            this.fail = true;
+          }
+        });
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
+  }
 }
