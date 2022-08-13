@@ -20,6 +20,9 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     console.log(this.loginForm);
+    if (localStorage.getItem('userId')) {
+      this.router.navigate(['/menu']);
+    }
   }
 
   submitForm() {

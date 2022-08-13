@@ -5,5 +5,18 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <ion-item [routerLink]="'/tipos'" detail>
+      <ion-label> <ion-icon name="list"></ion-icon> Tipos de contas </ion-label>
+    </ion-item>
+    <ion-item [routerLink]="'/contas'" detail>
+      <ion-label> <ion-icon name="cash"></ion-icon> Contas </ion-label>
+    </ion-item>
+    <ion-item [routerLink]="'/cadastro'" detail>
+      <ion-label> <ion-icon name="person"></ion-icon> Meus dados </ion-label>
+    </ion-item>
+    <ion-item (click)="logout()" detail>
+      <ion-label> <ion-icon name="log-out"></ion-icon> Sair </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

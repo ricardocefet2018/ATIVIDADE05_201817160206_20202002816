@@ -17,7 +17,11 @@ export class CadastroPage implements OnInit {
 
   constructor(private usuarioService: UsuarioService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (localStorage.getItem('userId')) {
+      this.router.navigate(['/menu']);
+    }
+  }
 
   submitForm() {
     if (this.cadastroForm.valid) {
