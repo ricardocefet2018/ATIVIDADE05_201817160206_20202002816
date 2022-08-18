@@ -34,9 +34,7 @@ export class CadastroPage extends BaseClass implements OnInit {
   }
 
   ngOnInit() {
-    if (!localStorage.getItem('userId')) {
-      this.router.navigate(['/menu']);
-    } else {
+    if (localStorage.getItem('userId')) {
       this.exibirLoader();
       console.log('onInit');
       this.usuarioService

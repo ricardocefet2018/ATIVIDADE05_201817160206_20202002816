@@ -76,8 +76,8 @@ export class ContasPage implements OnInit {
 
   async excluir(id: number) {
     let json = await this.contaService.getById(id);
-    const cartao = <Conta>json;
-    this.confirmarExclusao(cartao);
+    const conta = <Conta>json;
+    this.confirmarExclusao(conta);
   }
 
   async confirmarExclusao(conta: Conta) {
