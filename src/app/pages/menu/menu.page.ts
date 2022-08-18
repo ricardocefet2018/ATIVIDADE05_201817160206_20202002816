@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router,private activatedRoute: ActivatedRoute, private navController: NavController) {}
 
   ngOnInit() {}
 
@@ -20,5 +22,10 @@ export class MenuPage implements OnInit {
   logout() {
     localStorage.removeItem('userId');
     this.router.navigate(['/login']);
+  }
+
+  async recuperarId(){
+    let id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.navController.navigateBack('/cadastro/'+id);
   }
 }

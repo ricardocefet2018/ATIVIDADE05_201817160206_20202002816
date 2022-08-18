@@ -48,6 +48,19 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
   },
+  {
+    path: 'add-conta',
+    loadChildren: () => import('./pages/add-conta/add-conta.module').then( m => m.AddContaPageModule)
+  },
+  {
+    path: 'cadastro/:id',
+    loadChildren: () => import('./pages/cadastro/cadastro.module').then(
+      (m) => m.CadastroPageModule)
+  },
+  {
+    path: 'add-conta/:id',
+    loadChildren: () => import('./pages/add-conta/add-conta.module').then( m => m.AddContaPageModule)
+  },
 ];
 
 @NgModule({
