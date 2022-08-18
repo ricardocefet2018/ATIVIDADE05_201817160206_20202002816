@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { Conta } from 'src/app/models/conta';
+import { Tipo } from 'src/app/models/tipo';
 import { ContaService } from 'src/app/services/conta.service';
+import { TipoService } from 'src/app/services/tipo.service';
 
 @Component({
   selector: 'app-add-conta',
@@ -12,24 +14,30 @@ import { ContaService } from 'src/app/services/conta.service';
 })
 export class AddContaPage implements OnInit {
   formGroup: FormGroup;
+  tipos: Tipo[];
   conta: Conta;
   descricaoUnica: boolean;
 
-  constructor(private formBuilder: FormBuilder, private contaService: ContaService, private toastController: ToastController, private navController: NavController,
-    private activatedRoute: ActivatedRoute) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private contaService: ContaService,
+    private toastController: ToastController,
+    private navController: NavController,
+    private activatedRoute: ActivatedRoute,
+    private tipoService: TipoService
+  ) {
     this.formGroup = this.formBuilder.group({
-      data: ['',
-          [
+      data: [
+        '',
+        [
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(10)
-        ]],
-      valor: ['',
-          Validators.compose([
-          Validators.required,
-          Validators.minLength(3),
-        
-        ]),
+          Validators.maxLength(10),
+        ],
+      ],
+      valor: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(3)]),
       ],
       descricao: ['', Validators.required],
     });
@@ -37,7 +45,6 @@ export class AddContaPage implements OnInit {
 
   ngOnInit() {
     this.descricaoUnica = false;
-
     this.conta = new Conta();
     let id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id != null) {
@@ -51,6 +58,9 @@ export class AddContaPage implements OnInit {
         this.formGroup.get('situacao').setValue(this.conta.situacao);
       });
     }
+    this.tipoService.list().then((tipos) => {
+      this.tipos = <Tipo[]>tipos;
+    });
   }
 
   async submitForm() {
@@ -60,18 +70,18 @@ export class AddContaPage implements OnInit {
     this.conta.tipo = this.formGroup.value.tipo;
     this.conta.situacao = this.formGroup.value.situacao;
 
-    if(this.descricaoUnica == true){
+    if (this.descricaoUnica == true) {
       this.exibirMensagem('Descrição já existente');
-    }else{
+    } else {
       this.contaService
-      .salvar(this.conta)
-      .then(() => {
-        this.exibirMensagem('Conta cadastrada com sucesso!');
-        this.navController.navigateBack('/conta');
-      })
-      .catch((err) => {
-        this.exibirMensagem('Erro ao cadastrar conta: ' + err.message);
-      });
+        .salvar(this.conta)
+        .then(() => {
+          this.exibirMensagem('Conta cadastrada com sucesso!');
+          this.navController.navigateBack('/conta');
+        })
+        .catch((err) => {
+          this.exibirMensagem('Erro ao cadastrar conta: ' + err.message);
+        });
     }
   }
 
@@ -87,19 +97,19 @@ export class AddContaPage implements OnInit {
   }
 
   async verificarDescricao() {
-    this.contaService.isExists(this.formGroup.value.descricao)
+    this.contaService
+      .isExists(this.formGroup.value.descricao)
       .then((json) => {
         if (json) {
           this.descricaoUnica = true;
         } else {
-          this.descricaoUnica = false;          
+          this.descricaoUnica = false;
         }
       })
       .catch((err) => {
-        this.exibirMensagem('Erro ao verificar a descrição da conta: ' + err.message);
+        this.exibirMensagem(
+          'Erro ao verificar a descrição da conta: ' + err.message
+        );
       });
-
   }
-
-
 }

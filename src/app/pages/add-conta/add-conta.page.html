@@ -11,8 +11,11 @@
   <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
     <ion-item>
       <ion-label position="floating">Descrição</ion-label>
-      <ion-input type="text" formControlName="descricao" 
-        (ionBlur)="verificarDescricao()"></ion-input>
+      <ion-input
+        type="text"
+        formControlName="descricao"
+        (ionBlur)="verificarDescricao()"
+      ></ion-input>
       <div class="erroValidacao">
         <p *ngIf="descricaoUnica">Descrição já existente</p>
       </div>
@@ -23,11 +26,11 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Vencimento</ion-label>
-      <ion-input type="text" formControlName="data" ></ion-input>      
+      <ion-input type="text" formControlName="data"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Tipo de Conta</ion-label>
-      <ion-select *ngFor="conta tipo of contas" formControlName="tipo">
+      <ion-select formControlName="tipo" *ngFor="let tipo of tipos">
         <ion-select-option>{{conta.tipo}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -38,6 +41,12 @@
         <ion-select-option value="false">Em aberta</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-button type="submit" expand="block" color="primary" [disabled]="!formGroup.valid">Salvar</ion-button>
+    <ion-button
+      type="submit"
+      expand="block"
+      color="primary"
+      [disabled]="!formGroup.valid"
+      >Salvar</ion-button
+    >
   </form>
 </ion-content>
