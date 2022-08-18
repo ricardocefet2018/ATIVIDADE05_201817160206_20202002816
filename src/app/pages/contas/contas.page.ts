@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Conta } from 'src/app/models/conta';
-import { AlertController, LoadingController, ToastController} from '@ionic/angular';
+import {
+  AlertController,
+  LoadingController,
+  ToastController,
+} from '@ionic/angular';
 import { ContaService } from 'src/app/services/conta.service';
 
 @Component({
@@ -9,13 +13,17 @@ import { ContaService } from 'src/app/services/conta.service';
   styleUrls: ['./contas.page.scss'],
 })
 export class ContasPage implements OnInit {
-
   contas: Conta[];
+  situacaoConta: boolean;
 
-  constructor(private contaService: ContaService, private loadingController: LoadingController, private alertController: AlertController, private toastController: ToastController) {}
+  constructor(
+    private contaService: ContaService,
+    private loadingController: LoadingController,
+    private alertController: AlertController,
+    private toastController: ToastController
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async ionViewWillEnter() {
     this.carregarLista();
@@ -24,7 +32,24 @@ export class ContasPage implements OnInit {
   async carregarLista() {
     this.exibirLoader();
     let json = await this.contaService.listar();
-    this.contas = <Conta[]>json;
+    this.contas = <Conta[]>json.map((conta) => {
+      let data = new Date(conta.data);
+      let dia =
+        data.getDate() < 10
+          ? '0' + data.getDate().toString()
+          : data.getDate().toString();
+      let mes =
+        data.getMonth() + 1 < 10
+          ? '0' + (data.getMonth() + 1).toString()
+          : (data.getMonth() + 1).toString();
+      let ano =
+        data.getFullYear() < 10
+          ? '0' + data.getFullYear().toString()
+          : data.getFullYear().toString();
+      conta.data = `${dia}/${mes}/${ano}`;
+      return conta;
+    });
+
     this.fecharLoader();
   }
 

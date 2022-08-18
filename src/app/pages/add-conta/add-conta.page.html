@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defautHref="conta"></ion-back-button>
     </ion-buttons>
-    <ion-title>Conta</ion-title>
+    <ion-title>Cadatrar conta</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -26,12 +26,18 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Vencimento</ion-label>
-      <ion-input type="text" formControlName="data"></ion-input>
+      <ion-input
+        type="text"
+        formControlName="data"
+        [brmasker]="{mask: '99/99/9999'}"
+      ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Tipo de Conta</ion-label>
-      <ion-select formControlName="tipo" *ngFor="let tipo of tipos">
-        <ion-select-option>{{conta.tipo}}</ion-select-option>
+      <ion-select formControlName="tipo">
+        <ion-select-option *ngFor="let tipo of tipos" [value]="tipo.id"
+          >{{tipo.descricao}}</ion-select-option
+        >
       </ion-select>
     </ion-item>
     <ion-item>
