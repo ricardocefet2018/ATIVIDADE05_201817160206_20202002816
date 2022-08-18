@@ -11,6 +11,7 @@ import { ContaService } from 'src/app/services/conta.service';
 export class ContasPage implements OnInit {
 
   contas: Conta[];
+  situacaoConta: boolean
 
   constructor(private contaService: ContaService, private loadingController: LoadingController, private alertController: AlertController, private toastController: ToastController) {}
 
@@ -25,6 +26,7 @@ export class ContasPage implements OnInit {
     this.exibirLoader();
     let json = await this.contaService.listar();
     this.contas = <Conta[]>json;
+    
     this.fecharLoader();
   }
 

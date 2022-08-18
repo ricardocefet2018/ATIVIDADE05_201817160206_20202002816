@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { AddContaPageRoutingModule } from './add-conta-routing.module';
 
 import { AddContaPage } from './add-conta.page';
+import { BrMaskerModule } from 'br-mask';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AddContaPageRoutingModule
+    AddContaPageRoutingModule,
+    BrMaskerModule
   ],
   declarations: [AddContaPage]
 })

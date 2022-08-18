@@ -7,10 +7,17 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-item-sliding *ngFor="let conta of contas">
-      <ion-item [routerLink]="'/add-conta/' + conta.id" detail>
-        <ion-label>{{conta.descricao}}</ion-label>
+      <ion-item [routerLink]="'/add-conta/' + conta.id">
+        <ion-label>
+          {{conta.descricao}}
+          <p>
+            Vencimento: {{conta.data}}
+          </p>
+          <ion-icon *ngIf=conta.situacao name="checkmark-outline"></ion-icon>
+          <ion-icon *ngIf=!conta.situacao name="close-outline"></ion-icon>        
+        </ion-label>
       </ion-item>
-      <ion-item-options side="start">
+      <ion-item-options>
         <ion-item-option color="danger" (click)="excluir(conta.id)">
           Excluir
         </ion-item-option>
