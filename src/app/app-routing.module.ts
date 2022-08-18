@@ -32,6 +32,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'gerenciar-tipo/:id',
+    loadChildren: () =>
+      import('./pages/gerenciar-tipo/gerenciar-tipo.module').then(
+        (m) => m.GerenciarTipoPageModule
+      ),
+  },
+  {
     path: 'contas',
     loadChildren: () =>
       import('./pages/contas/contas.module').then((m) => m.ContasPageModule),
@@ -50,16 +57,24 @@ const routes: Routes = [
   },
   {
     path: 'add-conta',
-    loadChildren: () => import('./pages/add-conta/add-conta.module').then( m => m.AddContaPageModule)
+    loadChildren: () =>
+      import('./pages/add-conta/add-conta.module').then(
+        (m) => m.AddContaPageModule
+      ),
   },
   {
     path: 'cadastro/:id',
-    loadChildren: () => import('./pages/cadastro/cadastro.module').then(
-      (m) => m.CadastroPageModule)
+    loadChildren: () =>
+      import('./pages/cadastro/cadastro.module').then(
+        (m) => m.CadastroPageModule
+      ),
   },
   {
     path: 'add-conta/:id',
-    loadChildren: () => import('./pages/add-conta/add-conta.module').then( m => m.AddContaPageModule)
+    loadChildren: () =>
+      import('./pages/add-conta/add-conta.module').then(
+        (m) => m.AddContaPageModule
+      ),
   },
 ];
 

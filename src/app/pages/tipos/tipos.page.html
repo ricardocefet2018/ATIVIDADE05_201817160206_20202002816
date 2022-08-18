@@ -1,9 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>tipos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tipos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let tipo of tipos">
+      <ion-item [routerLink]="'../gerenciar-tipo/'+tipo.id" detail>
+        <ion-label>{{tipo.descricao}}</ion-label>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="danger" (click)="excluirTipo(tipo.id)"
+          >Excluir</ion-item-option
+        >
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/gerenciar-tipo" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
