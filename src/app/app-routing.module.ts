@@ -56,6 +56,11 @@ const routes: Routes = [
       import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
   },
   {
+    path: 'menu/:id',
+    loadChildren: () =>
+      import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
+  },
+  {
     path: 'add-conta',
     loadChildren: () =>
       import('./pages/add-conta/add-conta.module').then(

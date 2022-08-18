@@ -31,4 +31,34 @@ export class UsuarioService {
         .toPromise() as Promise<Usuario>;
     }
   }
+
+  async checkLogged(): Promise<Usuario> {
+    let idString = localStorage.getItem('logged');
+    if (idString == '') {
+      return null;
+    } else {
+      return await this.getUserById(Number(idString));
+    }
+  }
+
+  async getUserById(id: number): Promise<Usuario> {
+    let usuarios = await this.getUserList();
+    let usuario = usuarios.find((usuario) => usuario.id == id);
+    return usuario;
+  }
+
+  private async getUserList(): Promise<Usuario[]> {
+    let usuarios = JSON.parse(localStorage.getItem('userId')) as
+      | Usuario[]
+      | null;
+    if (usuarios == null) {
+      usuarios = [];
+      this.setUserList(usuarios);
+    }
+    return usuarios;
+  }
+
+  private setUserList(usuarios: Usuario[]): void {
+    localStorage.setItem('tbUsuarios', JSON.stringify(usuarios));
+  }
 }
